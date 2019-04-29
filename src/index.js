@@ -4,12 +4,14 @@ import './index.css';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import Create from './Create';
+import Review from './Review';
 import * as serviceWorker from './serviceWorker';
 
 const routing = (
     <Router>
       <div>
         <Route exact path="/" component={App} />
+        <Route path="/review/:id" component={Review} />
         <Route path="/create" component={Create} />
       </div>
     </Router>

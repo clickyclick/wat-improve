@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
+import axios from "axios";
 
 //import './Create.css';
 
@@ -28,7 +29,9 @@ class Create extends React.Component {
     super(props);
     this.state = {
       name: '',
-      message: ''
+      message: '',
+      created: false,
+      id: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -42,12 +45,29 @@ class Create extends React.Component {
 
   handleSubmit(event) {
     alert('A name was submitted: ' + this.state.name + this.state.message);
+    this.addReview();
     event.preventDefault();
   }
 
+  addReview = () => {
+    let name = this.state.name;
+    let message = this.state.message
+   
+    axios.post("http://localhost:3001/api/review", {
+      name: name,
+      message: message
+    }).then((res) =>{
+      console.log(res);
+        if (res.data.id){
+          this.setState({created:true, id:res.data.id})
+        }
+    });
+  };
+
   render() {
-    return (
-      <div className="createMainDiv">
+    console.log(this.state.id);
+    return ([
+      <div key="form" className="createMainDiv">
         <h1>Fill in your information</h1>
         <form className="createForm" autoComplete="off" onSubmit={this.handleSubmit}>
         <TextField
@@ -65,10 +85,22 @@ class Create extends React.Component {
         </TextField>
           <Button type="submit" className="submitButton" >Submit</Button>
         </form>
+      </div>,
+      <div key="link" className="linkDiv">
+        <h1>Send this to your employer:</h1>
+        <LinkGen id={this.state.id} />
       </div>
-    )
+    ])
   }
 }
+
+function LinkGen(props) {
+  return (
+    <a href={"/review/" + props.id}>
+      http://localhost:3000/review/{props.id}
+    </a>
+  )
+};
 
 
 export default Create;
