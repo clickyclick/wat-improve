@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React from 'react'
+import Button from '@material-ui/core/Button';
+import { withRouter } from 'react-router-dom'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+
+
+  render() {
+    return (
+      <div className="appMainDiv">
+        <h1>Welcome to WAT Improve</h1>
+        <h4>Click create to get started!</h4>
+        <CreateButton className="createButton"/>
+      </div>
+    )
+  }
 }
 
-export default App;
+const CreateButton = withRouter(({ history }) => (
+  <Button
+    onClick={() => { history.push('/create') }}
+  >
+    Create
+  </Button>
+))
+
+export default App

@@ -1,0 +1,13 @@
+.createMainDiv{
+    text-align: center
+}
+
+.createMainDiv > div{
+    display: block;
+    padding: 10px;
+}
+
+.submitButton{
+    margin-top: 30px;
+    display: block
+}
