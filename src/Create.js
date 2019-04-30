@@ -8,6 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Switch from '@material-ui/core/Switch';
 import axios from "axios";
+import config from "./config.js"
 
 //import './Create.css';
 
@@ -97,7 +98,7 @@ class Create extends React.Component {
     let message = this.state.message
     let reviewAreas = this.state.reviewAreas;
 
-    axios.post("http://localhost:3001/api/review", {
+    axios.post(config.envConfig.serverURL +"/api/review", {
       name: name,
       message: message,
       reviewAreas: reviewAreas
@@ -110,6 +111,7 @@ class Create extends React.Component {
   };
 
   render() {
+    console.log(config.envConfig.serverURL);
     console.log(this.state.id);
     return ([
       <div key="form" className="createMainDiv">
@@ -282,16 +284,26 @@ class Create extends React.Component {
       </div>,
       <div key="link" className="linkDiv">
         <h1>Send this to your employer:</h1>
-        <LinkGen id={this.state.id} />
+        <EmployerLinkGen id={this.state.id} />
+        <h1>Check your results here:</h1>
+        <YourLinkGen id={this.state.id} />
       </div>
     ])
   }
 }
 
-function LinkGen(props) {
+function EmployerLinkGen(props) {
   return (
     <a href={"/review/" + props.id}>
-      http://localhost:3000/review/{props.id}
+      config.envConfig.webURL/review/{props.id}
+    </a>
+  )
+};
+
+function YourLinkGen(props) {
+  return (
+    <a href={"/result/" + props.id}>
+      config.envConfig.webURL/result/{props.id}
     </a>
   )
 };

@@ -5,6 +5,7 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import Create from './Create';
 import Review from './Review';
+import Result from './Result';
 import * as serviceWorker from './serviceWorker';
 
 const routing = (
@@ -12,6 +13,7 @@ const routing = (
       <div>
         <Route exact path="/" component={App} />
         <Route path="/review/:id" component={Review} />
+        <Route path="/result/:id" component={Result} />
         <Route path="/create" component={Create} />
       </div>
     </Router>

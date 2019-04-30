@@ -8,7 +8,8 @@ const DataSchema = new Schema(
     id: String,
     name: String,
     message: String,
-    reviewAreas: JSON
+    reviewAreas: JSON,
+    finished: Boolean
   },
   { timestamps: true }
 );

@@ -6,7 +6,8 @@ const Schema = mongoose.Schema;
 const DataSchema = new Schema(
   {
     id: String,
-    completedReview: JSON
+    reviewAreas: JSON,
+    completeReview: JSON
   },
   { timestamps: true }
 );

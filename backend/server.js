@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const shortid = require("shortid");
 const logger = require("morgan");
 const ReviewRepository = require("./dataModel/review");
+const SubmissionRepository = require("./dataModel/submission");
 
 const API_PORT = 3001;
 const app = express();
@@ -36,9 +37,19 @@ app.use(logger("dev"));
 
 //this retrieves a review based on its ID
 router.get("/review/:id", (req, res) => {
-const id = req.params.id;
-console.log(id);
-ReviewRepository.find({id:id}, (err, data) => {
+  const id = req.params.id;
+  console.log(id);
+  ReviewRepository.find({ id: id }, (err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    console.log(data[0]);
+    return res.json({ success: true, data: data[0] });
+  });
+});
+
+router.get("/submission/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  SubmissionRepository.find({ id: id }, (err, data) => {
     if (err) return res.json({ success: false, error: err });
     console.log(data[0]);
     return res.json({ success: true, data: data[0] });
@@ -68,7 +79,7 @@ ReviewRepository.find({id:id}, (err, data) => {
 
 // adds new request in our database
 router.post("/review", (req, res) => {
-    console.log("/review");
+  console.log("/review");
   let data = new ReviewRepository();
 
   const id = shortid.generate();
@@ -85,31 +96,40 @@ router.post("/review", (req, res) => {
   data.message = message;
   data.id = id;
   data.reviewAreas = reviewAreas;
+  data.finished = false;
   data.save(err => {
     if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true , id: id });
+    return res.json({ success: true, id: id });
   });
 });
 
 
 router.post("/submission", (req, res) => {
-    console.log("/submission");
+  console.log("/submission");
   let data = new SubmissionRepository();
- 
-  const { id, completedReview } = req.body;
+  let reviewData = new ReviewRepository();
+
+  const { id, reviewAreas, completeReview } = req.body;
   console.log(id);
-  if (!id || !completedReview) {
+  if (!id || !completeReview || !reviewAreas) {
     return res.json({
       success: false,
       error: "INVALID INPUTS"
     });
   }
   data.id = id;
-  data.completedReview = completedReview;
+  data.completeReview = completeReview;
+  data.reviewAreas = reviewAreas
   data.save(err => {
     if (err) return res.json({ success: false, error: err });
-    return res.json({success: true});
-  });
+  })
+  console.log("f my life");
+
+  ReviewRepository.findOneAndUpdate({ id: id }, { $set: { finished: true } }, err => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  })
+
 });
 
 // /api for api calls
