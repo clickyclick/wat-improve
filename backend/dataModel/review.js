@@ -7,10 +7,11 @@ const DataSchema = new Schema(
   {
     id: String,
     name: String,
-    message: String
+    message: String,
+    reviewAreas: JSON
   },
   { timestamps: true }
 );
 
-// export the new Schema so we could modify it using Node.js
+
 module.exports = mongoose.model("Review", DataSchema);
