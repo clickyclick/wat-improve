@@ -4,8 +4,8 @@ const local = {
 };
 
 const prod = {
-    serverURL: "tester.com",
-    webURL: "http://localhost:3000"
+    serverURL: "http://ec2-18-218-117-80.us-east-2.compute.amazonaws.com:3001",
+    webURL: "http://ec2-18-218-117-80.us-east-2.compute.amazonaws.com:3000"
 };
 
 const envConfig = process.env.REACT_APP_ENV === 'production'
