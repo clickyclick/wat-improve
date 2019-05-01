@@ -295,7 +295,7 @@ class Create extends React.Component {
 function EmployerLinkGen(props) {
   return (
     <a href={"/review/" + props.id}>
-      config.envConfig.webURL/review/{props.id}
+      {config.envConfig.webURL}/review/{props.id}
     </a>
   )
 };
@@ -303,7 +303,7 @@ function EmployerLinkGen(props) {
 function YourLinkGen(props) {
   return (
     <a href={"/result/" + props.id}>
-      config.envConfig.webURL/result/{props.id}
+      {config.envConfig.webURL}/result/{props.id}
     </a>
   )
 };
