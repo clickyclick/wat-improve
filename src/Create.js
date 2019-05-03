@@ -9,24 +9,29 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Switch from '@material-ui/core/Switch';
 import axios from "axios";
 import config from "./config.js"
+import posed from 'react-pose';
 
-//import './Create.css';
+import './Create.css';
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+const LinkBox = posed.div({
+  visible: {
+    opacity: 1,
+    applyAtStart: { display: 'inline-block'}
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
+  hidden: {
+    opacity: 0,
+    applyAtEnd: { display: 'none'}
+  }
+});
+
+const FormBox = posed.div({
+  hidden: {
+    applyAtEnd: { display: 'none'},
+    opacity: 0,
   },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
+  visible: {
+    applyAtStart: { display: 'block'},
+    opacity: 1,
   },
 });
 
@@ -70,7 +75,6 @@ class Create extends React.Component {
   };
 
   handleToggle = name => event => {
-    console.log(this.state.amountSelected)
     if (this.state.amountSelected === 1) {
       event.preventDefault();
     } else {
@@ -98,12 +102,11 @@ class Create extends React.Component {
     let message = this.state.message
     let reviewAreas = this.state.reviewAreas;
 
-    axios.post(config.envConfig.serverURL +"/api/review", {
+    axios.post(config.envConfig.serverURL + "/api/review", {
       name: name,
       message: message,
       reviewAreas: reviewAreas
     }).then((res) => {
-      console.log(res);
       if (res.data.id) {
         this.setState({ created: true, id: res.data.id })
       }
@@ -111,182 +114,213 @@ class Create extends React.Component {
   };
 
   render() {
-    console.log(config.envConfig.serverURL);
-    console.log(this.state.id);
     return ([
+      <div className="backgroundDiv">
       <div key="form" className="createMainDiv">
-        <h1>Fill in your information</h1>
-        <form className="createForm" autoComplete="off" onSubmit={this.handleSubmit}>
-          <TextField
-            required
-            label="Your Name"
-            className="input"
-            value={this.state.name}
-            onChange={this.handleChange('name')}>
-          </TextField>
-          <TextField
-            label="Message to reviewer"
-            className="input"
-            value={this.state.message}
-            onChange={this.handleChange('message')}>
-          </TextField>
-          <FormLabel component="legend">Which areas do you want feedback?</FormLabel>
-          <FormGroup required>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.interest}
-                  onChange={this.handleToggle('interest')}
+        <FormBox pose={!this.state.created ? 'visible' : 'hidden'}>
+          <h1 className="title">Fill in your information</h1>
+          <form className="createForm" autoComplete="off" onSubmit={this.handleSubmit}>
+            <TextField
+              required
+              label="Your Name"
+              className="inputFields"
+              value={this.state.name}
+              onChange={this.handleChange('name')}>
+            </TextField>
+            <TextField
+              label="Message to reviewer"
+              className="inputFields"
+              value={this.state.message}
+              onChange={this.handleChange('message')}>
+            </TextField>
+            <FormLabel className="formTitle" component="legend">Which areas do you want feedback?</FormLabel>
+            <FormGroup required>
+              <div className="optionsDiv">
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.interest}
+                      onChange={this.handleToggle('interest')}
+                    />
+                  }
+                  label="Interest in Work"
                 />
-              }
-              label="Interest in Work"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.learn}
-                  onChange={this.handleToggle('learn')}
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.learn}
+                      onChange={this.handleToggle('learn')}
+                    />
+                  }
+                  label="Ability to Learn"
                 />
-              }
-              label="Ability to Learn"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.quality}
-                  onChange={this.handleToggle('quality')}
+                <br></br>
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.quality}
+                      onChange={this.handleToggle('quality')}
+                    />
+                  }
+                  label="Quality of Work"
                 />
-              }
-              label="Quality of Work"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.quantity}
-                  onChange={this.handleToggle('quantity')}
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.quantity}
+                      onChange={this.handleToggle('quantity')}
+                    />
+                  }
+                  label="Quantity of Work"
                 />
-              }
-              label="Quantity of Work"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.problem}
-                  onChange={this.handleToggle('problem')}
+                <br></br>
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.problem}
+                      onChange={this.handleToggle('problem')}
+                    />
+                  }
+                  label="Problem Solving"
                 />
-              }
-              label="Problem Solving"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.teamwork}
-                  onChange={this.handleToggle('teamwork')}
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.teamwork}
+                      onChange={this.handleToggle('teamwork')}
+                    />
+                  }
+                  label="Teamwork"
                 />
-              }
-              label="Teamwork"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.dependability}
-                  onChange={this.handleToggle('dependability')}
+                <br></br>
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.dependability}
+                      onChange={this.handleToggle('dependability')}
+                    />
+                  }
+                  label="Dependability"
                 />
-              }
-              label="Dependability"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.supervision}
-                  onChange={this.handleToggle('supervision')}
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.supervision}
+                      onChange={this.handleToggle('supervision')}
+                    />
+                  }
+                  label="Response to Supervision"
                 />
-              }
-              label="Response to Supervision"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.reflection}
-                  onChange={this.handleToggle('reflection')}
+                <br></br>
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.reflection}
+                      onChange={this.handleToggle('reflection')}
+                    />
+                  }
+                  label="Reflection"
                 />
-              }
-              label="Reflection"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.resourcefulness}
-                  onChange={this.handleToggle('resourcefulness')}
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.resourcefulness}
+                      onChange={this.handleToggle('resourcefulness')}
+                    />
+                  }
+                  label="Resourcefulness"
                 />
-              }
-              label="Resourcefulness"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.ethical}
-                  onChange={this.handleToggle('ethical')}
+                <br></br>
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.ethical}
+                      onChange={this.handleToggle('ethical')}
+                    />
+                  }
+                  label="Ethical Behaviour"
                 />
-              }
-              label="Ethical Behaviour"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.diversity}
-                  onChange={this.handleToggle('diversity')}
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.diversity}
+                      onChange={this.handleToggle('diversity')}
+                    />
+                  }
+                  label="Appreciation of Diversity"
                 />
-              }
-              label="Appreciation of Diversity"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.entres}
-                  onChange={this.handleToggle('entre')}
+                <br></br>
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.entres}
+                      onChange={this.handleToggle('entre')}
+                    />
+                  }
+                  label="Entrepreneurial Orientation"
                 />
-              }
-              label="Entrepreneurial Orientation"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.written}
-                  onChange={this.handleToggle('written')}
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.written}
+                      onChange={this.handleToggle('written')}
+                    />
+                  }
+                  label="Written Communication"
                 />
-              }
-              label="Written Communication"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.oral}
-                  onChange={this.handleToggle('oral')}
+                <br></br>
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.oral}
+                      onChange={this.handleToggle('oral')}
+                    />
+                  }
+                  label="Oral Communication"
                 />
-              }
-              label="Oral Communication"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.reviewAreas.personal}
-                  onChange={this.handleToggle('personal')}
+                <FormControlLabel
+                  className="formOption"
+                  control={
+                    <Switch
+                      checked={this.state.reviewAreas.personal}
+                      onChange={this.handleToggle('personal')}
+                    />
+                  }
+                  label="Interpersonal Communication"
                 />
-              }
-              label="Interpersonal Communication"
-            />
-
-          </FormGroup>
-          <FormHelperText>Pick atleast one</FormHelperText>
-          <Button type="submit" className="submitButton" >Submit</Button>
-        </form>
-      </div>,
+                <br></br>
+                 <Button type="submit" className="submitButton" >Submit</Button>
+              </div>
+              
+            </FormGroup>
+           
+          </form>
+        </FormBox>
+      </div>
       <div key="link" className="linkDiv">
-        <h1>Send this to your employer:</h1>
-        <EmployerLinkGen id={this.state.id} />
-        <h1>Check your results here:</h1>
-        <YourLinkGen id={this.state.id} />
+        <LinkBox className="LinkBox"
+          pose={this.state.created ? 'visible' : 'hidden'}>
+          <h1>Send this to your employer:</h1>
+          <EmployerLinkGen id={this.state.id} />
+          <h1>Check your results here:</h1>
+          <YourLinkGen id={this.state.id} />
+        </LinkBox>
+      </div>
       </div>
     ])
   }

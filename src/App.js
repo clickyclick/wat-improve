@@ -9,10 +9,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="appMainDiv">
-        <h1>Welcome to WAT Improve</h1>
-        <h4>Click create to get started!</h4>
-        <CreateButton className="createButton"/>
+      <div className="container">
+        <div className="appMainDiv">
+        <div className="textDiv">
+          <h1>Welcome to Wat Improve</h1>
+          <h4>Click create to get started!</h4>
+          <CreateButton className="createButton" />
+          </div>
+        </div>
       </div>
     )
   }
