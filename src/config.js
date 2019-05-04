@@ -5,7 +5,7 @@ const local = {
 
 const prod = {
     serverURL: "http://ec2-18-218-117-80.us-east-2.compute.amazonaws.com:3001",
-    webURL: "http://ec2-18-218-117-80.us-east-2.compute.amazonaws.com:3000"
+    webURL: "https://watimprove.com"
 };
 
 const envConfig = process.env.REACT_APP_ENV === 'production'

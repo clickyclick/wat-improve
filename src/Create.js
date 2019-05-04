@@ -115,7 +115,7 @@ class Create extends React.Component {
 
   render() {
     return ([
-      <div className="backgroundDiv">
+      <div key="background" className="backgroundDiv">
       <div key="form" className="createMainDiv">
         <FormBox pose={!this.state.created ? 'visible' : 'hidden'}>
           <h1 className="title">Fill in your information</h1>

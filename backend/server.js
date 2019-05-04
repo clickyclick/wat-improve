@@ -38,20 +38,16 @@ app.use(logger("dev"));
 //this retrieves a review based on its ID
 router.get("/review/:id", (req, res) => {
   const id = req.params.id;
-  console.log(id);
   ReviewRepository.find({ id: id }, (err, data) => {
     if (err) return res.json({ success: false, error: err });
-    console.log(data[0]);
     return res.json({ success: true, data: data[0] });
   });
 });
 
 router.get("/submission/:id", (req, res) => {
   const id = req.params.id;
-  console.log(id);
   SubmissionRepository.find({ id: id }, (err, data) => {
     if (err) return res.json({ success: false, error: err });
-    console.log(data[0]);
     return res.json({ success: true, data: data[0] });
   });
 });
@@ -79,13 +75,10 @@ router.get("/submission/:id", (req, res) => {
 
 // adds new request in our database
 router.post("/review", (req, res) => {
-  console.log("/review");
   let data = new ReviewRepository();
 
   const id = shortid.generate();
-  console.log(id);
   const { name, message, reviewAreas } = req.body;
-  console.log(name);
   if (!name) {
     return res.json({
       success: false,
@@ -105,12 +98,10 @@ router.post("/review", (req, res) => {
 
 
 router.post("/submission", (req, res) => {
-  console.log("/submission");
   let data = new SubmissionRepository();
   let reviewData = new ReviewRepository();
 
   const { id, reviewAreas, completeReview } = req.body;
-  console.log(id);
   if (!id || !completeReview || !reviewAreas) {
     return res.json({
       success: false,
@@ -123,7 +114,7 @@ router.post("/submission", (req, res) => {
   data.save(err => {
     if (err) return res.json({ success: false, error: err });
   })
-  console.log("f my life");
+
 
   ReviewRepository.findOneAndUpdate({ id: id }, { $set: { finished: true } }, err => {
     if (err) return res.json({ success: false, error: err });

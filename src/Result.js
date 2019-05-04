@@ -81,7 +81,7 @@ class Result extends React.Component {
     render() {
         const id = this.state.id;
         return (
-            <div className="backgroundDiv">
+            <div key="background" className="backgroundDiv">
                 <div className="MainDiv">
                 <FeedbackBox pose={this.state.ready ? 'visible' : 'hidden'}>
                     <h1>Here is your feedback</h1>
@@ -252,7 +252,7 @@ class Result extends React.Component {
                     </fieldset>
                     </FeedbackBox>
                     <WaitingBox pose={!this.state.ready ? 'visible' : 'hidden'}>
-                    <h1>Please comeback later</h1>
+                    <h1>Please come back later</h1>
                     <p>Your employer has not completed the review.</p>
                     </WaitingBox>
                 </div>

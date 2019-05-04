@@ -92,7 +92,7 @@ class Review extends React.Component {
         const id = this.state.id;
         const name = this.state.name
         return (
-            <div className="backgroundDiv">
+            <div key="background" className="backgroundDiv">
                 <div className="MainDiv">
                     <h1>Give {name} some Feedback</h1>
                     <p>Areas that should be focused on should be given the "Can Be Improved" option</p>
