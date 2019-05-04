@@ -48,6 +48,7 @@ class Review extends React.Component {
 
     componentDidMount() {
         axios.get(config.envConfig.serverURL + "/api/review/" + this.state.id).then((res) => {
+            console.log(res.data);
             if (res.data.data.reviewAreas && res.data.data.name) {
                 let completeReview = {};
                 for (var key in res.data.data.reviewAreas) {
