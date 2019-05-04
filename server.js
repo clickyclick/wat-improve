@@ -6,11 +6,20 @@ const shortid = require("shortid");
 const logger = require("morgan");
 const ReviewRepository = require("./dataModel/review");
 const SubmissionRepository = require("./dataModel/submission");
+const path = require('path');
 
-const API_PORT = 3001;
+
+const API_PORT = 3000;
 const app = express();
 app.use(cors());
 const router = express.Router();
+
+//static server stuff
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 
 // this is our MongoDB database
