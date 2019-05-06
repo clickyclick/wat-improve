@@ -62,7 +62,6 @@ class Review extends React.Component {
     }
 
     handleSubmit(event) {
-        alert('A review was completed: ');
         this.completeReview();
         event.preventDefault();
     }

@@ -29,9 +29,9 @@ app.get('/result/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-
-
-
+app.get('/create', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 
 
@@ -73,26 +73,6 @@ router.get("/submission/:id", (req, res) => {
     return res.json({ success: true, data: data[0] });
   });
 });
-
-// this is our update method
-// this method overwrites existing data in our database
-/*router.post("/review/:id", (req, res) => {
-  const { id, update } = req.body;
-  Data.findOneAndUpdate(id, update, err => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  });
-});
-
-// this is our delete method
-// this method removes existing data in our database
-/*router.delete("/review", (req, res) => {
-  const { id } = req.body;
-  Data.findOneAndDelete(id, err => {
-    if (err) return res.send(err);
-    return res.json({ success: true });
-  });
-});*/
 
 
 // adds new request in our database

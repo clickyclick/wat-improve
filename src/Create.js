@@ -92,7 +92,6 @@ class Create extends React.Component {
   };
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.name + this.state.message);
     this.addReview();
     event.preventDefault();
   }
