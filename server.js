@@ -15,7 +15,8 @@ app.use(cors());
 const router = express.Router();
 
 app.use(function(req, res, next) {
-  if(!req.secure && (process.env.REACT_APP_ENV === "production") ) {
+  console.log(req.get('x-forwarded-proto'), req.get('Host'), req.url);
+  if(!req.get('x-forwarded-proto') && (process.env.REACT_APP_ENV === "production") ) {
     return res.redirect(['https://', req.get('Host'), req.url].join(''));
   }
   next();
