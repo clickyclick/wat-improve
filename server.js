@@ -14,8 +14,16 @@ const app = express();
 app.use(cors());
 const router = express.Router();
 
+app.use(function(req, res, next) {
+  if(!req.secure && (process.env.REACT_APP_ENV === "production") ) {
+    return res.redirect(['https://', req.get('Host'), req.url].join(''));
+  }
+  next();
+});
+
 //static server stuff
 app.use(express.static(path.join(__dirname, 'build')));
+
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
