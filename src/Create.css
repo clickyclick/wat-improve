@@ -11,7 +11,7 @@
     text-align: center;
     width:700px;
     display: inline-block;
-    background: white;
+    background: #cbcbccf3;
     box-shadow: 5px 5px 10px;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -31,6 +31,7 @@
 
 .optionsDiv{
     text-align: center;
+    margin-bottom: 15px;
 }
 
 .formTitle{
@@ -45,14 +46,14 @@
     width: 20%;
     margin: 20px;
     display: inline-block !important;
-
+    height: 4em;
 }
 
 .LinkBox{
     text-align: center;
     width:700px;
     display: inline-block;
-    background: white;
+    background: #cbcbccf3;
     margin-top: 30px;
     margin-bottom: 30px;
     border-radius: 15px;
